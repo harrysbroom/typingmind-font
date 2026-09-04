@@ -1,7 +1,12 @@
 (function () {
+  const link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.href = "https://fonts.googleapis.com/css2?family=Trykker&display=swap";
+  document.head.appendChild(link);
+
   const css = `
     html, body, #__next, #__next *:not(code):not(pre):not(.font-mono):not(.font-mono *) {
-      font-family: "Iowan Old Style BT", "IowanOldStyleBT-Roman", "Iowan Old Style", Palatino, Georgia, serif !important;
+      font-family: Trykker, serif !important;
     }
     code, pre, .font-mono, .font-mono * {
       font-family: ui-monospace, Menlo, Consolas, monospace !important;
