@@ -5,11 +5,17 @@
   document.head.appendChild(link);
 
   const css = `
-    :root { --main-dark-color: #141115; }
+    :root {
+      --main-dark-color: #141115;
+    }
 
-    * { -webkit-tap-highlight-color: transparent !important; }
+    * {
+      -webkit-tap-highlight-color: transparent !important;
+    }
 
-    html { font-size: 18px !important; }
+    html {
+      font-size: 18px !important;
+    }
 
     html, body, #__next, #__next > div {
       background: #141115 !important;
@@ -21,23 +27,43 @@
       font-family: "Source Serif 4", serif !important;
     }
 
-    /* user bubbles: default purple/blue → dusty rose */
-    [class*="bg-indigo"],
-    [class*="bg-violet"],
-    [class*="bg-purple"],
-    [class*="bg-blue-5"],
-    [class*="bg-blue-6"],
-    [class*="bg-blue-7"] {
+    [data-element-id="user-message"],
+    [data-element-id="user-message"] > div {
       background-color: #8C3F60 !important;
+      background-image: none !important;
       color: #F5D7E3 !important;
     }
 
-    textarea, input, [contenteditable="true"] {
+    [data-element-id="response-block"],
+    [data-element-id="response-block"]:hover,
+    [data-element-id="response-block"]:active {
+      background-color: transparent !important;
+      background-image: none !important;
+      box-shadow: none !important;
+    }
+
+    [data-element-id="send-button"],
+    [data-element-id="more-options-button"],
+    [data-element-id="regenerate-button"] {
+      background-color: #8C3F60 !important;
+      border-color: #8C3F60 !important;
+      color: #F5D7E3 !important;
+    }
+
+    textarea, input, [contenteditable="true"],
+    [data-element-id="chat-input-textbox"] {
       color: #F5D7E3 !important;
       caret-color: #E4A3B9 !important;
     }
 
-    a { color: #E4A3B9 !important; }
+    a {
+      color: #E4A3B9 !important;
+    }
+
+    ::selection {
+      background: #8C3F60 !important;
+      color: #F5D7E3 !important;
+    }
 
     code, pre, .font-mono, .font-mono * {
       font-family: ui-monospace, Menlo, Consolas, monospace !important;
@@ -51,34 +77,25 @@
   style.textContent = css;
   document.head.appendChild(style);
 
-  function isGrayOverlay(bg) {
-    const m = String(bg).match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([0-9.]+))?\)/);
-    if (!m) return false;
-    const r = +m[1], g = +m[2], b = +m[3], a = m[4] == null ? 1 : +m[4];
-    const max = Math.max(r, g, b), min = Math.min(r, g, b);
-    const sat = max ? (max - min) / max : 0;
-    const grayBlock = sat < 0.12 && r > 35 && r < 95 && a > 0.4;
-    const whiteWash = sat < 0.12 && a > 0 && a < 0.35 && r > 80;
-    return grayBlock || whiteWash;
-  }
-
-  function stripHighlight(root) {
-    (root || document).querySelectorAll("div").forEach((el) => {
-      if (el.closest("textarea, button, input, nav")) return;
-      const bg = getComputedStyle(el).backgroundColor;
-      if (isGrayOverlay(bg)) {
-        el.style.setProperty("background-color", "transparent", "important");
-        el.style.setProperty("background", "transparent", "important");
-      }
+  function paintBubbles() {
+    document.querySelectorAll('[data-element-id="user-message"]').forEach((el) => {
+      el.style.setProperty("background-color", "#8C3F60", "important");
+      el.style.setProperty("color", "#F5D7E3", "important");
+      Array.from(el.querySelectorAll("div")).slice(0, 4).forEach((d) => {
+        const bg = getComputedStyle(d).backgroundColor;
+        if (bg && bg !== "rgba(0, 0, 0, 0)" && bg !== "transparent") {
+          d.style.setProperty("background-color", "#8C3F60", "important");
+        }
+      });
+    });
+    document.querySelectorAll('[data-element-id="response-block"]').forEach((el) => {
+      el.style.setProperty("background-color", "transparent", "important");
+      el.style.setProperty("background", "transparent", "important");
     });
   }
 
-  const chat = () => document.querySelector('[data-element-id="chat-space-middle-part"]') || document.body;
-
-  ["touchstart", "touchend", "click", "scroll"].forEach((ev) => {
-    document.addEventListener(ev, () => setTimeout(stripHighlight, 0), true);
-  });
-
-  const obs = new MutationObserver(() => stripHighlight(chat()));
-  obs.observe(document.body, { subtree: true, attributes: true, attributeFilter: ["class", "style"] });
+  paintBubbles();
+  setInterval(paintBubbles, 400);
+  document.addEventListener("touchend", () => setTimeout(paintBubbles, 0), true);
+  document.addEventListener("click", () => setTimeout(paintBubbles, 0), true);
 })();
