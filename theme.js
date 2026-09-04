@@ -13,7 +13,9 @@
     html { font-size: 16px !important; }
     html, body, #__next, #__next > div,
     [data-element-id="chat-space-middle-part"],
-    [data-element-id="main-content-area"] {
+    [data-element-id="main-content-area"],
+    [data-element-id="ai-response"],
+    [data-element-id="response-block"] {
       background: ${PAGE} !important;
       background-color: ${PAGE} !important;
       color: ${TEXT} !important;
@@ -24,9 +26,11 @@
     }
     [data-element-id="response-block"],
     [data-element-id="response-block"]:hover,
-    [data-element-id="response-block"]:active {
-      background: transparent !important;
-      background-color: transparent !important;
+    [data-element-id="response-block"]:active,
+    [data-element-id="ai-response"],
+    [data-element-id="ai-response"] > div {
+      background: ${PAGE} !important;
+      background-color: ${PAGE} !important;
       box-shadow: none !important;
     }
     [data-element-id="send-button"],
@@ -62,13 +66,13 @@
   function skip(el) {
     return !!(
       el.closest(
-        "button, textarea, input, nav, [data-element-id='send-button'], [data-element-id='workspace-bar'], [data-element-id='chat-input-textbox-container']"
+        "button, textarea, input, nav, [data-element-id='send-button'], [data-element-id='workspace-bar'], [data-element-id='chat-input-textbox-container'], [data-element-id='user-message']"
       )
     );
   }
 
   function isRose(c) {
-    return Math.abs(c.r - 140) < 30 && Math.abs(c.g - 63) < 30 && Math.abs(c.b - 96) < 30;
+    return Math.abs(c.r - 140) < 35 && Math.abs(c.g - 63) < 35 && Math.abs(c.b - 96) < 35;
   }
 
   function paint() {
@@ -87,10 +91,10 @@
       if (skip(el)) return;
       const w = el.offsetWidth;
       const h = el.offsetHeight;
-      if (w < 60 || h < 28) return;
+      if (w < 50 || h < 24) return;
 
       const c = rgb(getComputedStyle(el).backgroundColor);
-      if (!c || c.a < 0.12) return;
+      if (!c || c.a < 0.08) return;
       if (isRose(c)) return;
 
       const max = Math.max(c.r, c.g, c.b);
@@ -99,25 +103,25 @@
 
       const bluePurple = c.b > 110 && c.b > c.r + 15 && sat > 0.18;
       const grayPlate =
-        sat < 0.16 &&
-        c.r > 28 &&
-        c.r < 110 &&
-        Math.abs(c.r - c.g) < 12 &&
-        Math.abs(c.g - c.b) < 12;
+        sat < 0.22 &&
+        max > 24 &&
+        max < 130 &&
+        Math.abs(c.r - c.g) < 18 &&
+        Math.abs(c.g - c.b) < 18;
 
       if (bluePurple) {
         el.style.setProperty("background-color", ROSE, "important");
         el.style.setProperty("color", TEXT, "important");
       } else if (grayPlate) {
-        el.style.setProperty("background-color", "transparent", "important");
-        el.style.setProperty("background", "transparent", "important");
+        el.style.setProperty("background-color", PAGE, "important");
+        el.style.setProperty("background", PAGE, "important");
         el.style.setProperty("box-shadow", "none", "important");
       }
     });
   }
 
   paint();
-  setInterval(paint, 250);
+  setInterval(paint, 200);
   document.addEventListener("touchend", () => setTimeout(paint, 0), true);
   document.addEventListener("scroll", () => setTimeout(paint, 0), true);
 })();
