@@ -1,7 +1,7 @@
 (function () {
   const css = `
     html, body, #__next, textarea, input, button {
-      font-family: Georgia, "Times New Roman", serif !important;
+      font-family: "Iowan Old Style", Palatino, Georgia, serif !important;
     }
     code, pre, .font-mono {
       font-family: ui-monospace, Menlo, Consolas, monospace !important;
