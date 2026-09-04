@@ -13,10 +13,7 @@
     html { font-size: 16px !important; }
     html, body, #__next, #__next > div,
     [data-element-id="chat-space-middle-part"],
-    [data-element-id="main-content-area"],
-    [data-element-id="ai-response"],
-    [data-element-id="response-block"] {
-      background: ${PAGE} !important;
+    [data-element-id="main-content-area"] {
       background-color: ${PAGE} !important;
       color: ${TEXT} !important;
     }
@@ -25,12 +22,10 @@
       font-family: "Source Serif 4", serif !important;
     }
     [data-element-id="response-block"],
-    [data-element-id="response-block"]:hover,
-    [data-element-id="response-block"]:active,
-    [data-element-id="ai-response"],
-    [data-element-id="ai-response"] > div {
+    [data-element-id="ai-response"] {
       background: ${PAGE} !important;
       background-color: ${PAGE} !important;
+      background-image: none !important;
       box-shadow: none !important;
     }
     [data-element-id="send-button"],
@@ -75,47 +70,54 @@
     return Math.abs(c.r - 140) < 35 && Math.abs(c.g - 63) < 35 && Math.abs(c.b - 96) < 35;
   }
 
+  function flatten(el) {
+    el.style.setProperty("background", PAGE, "important");
+    el.style.setProperty("background-color", PAGE, "important");
+    el.style.setProperty("background-image", "none", "important");
+    el.style.setProperty("box-shadow", "none", "important");
+  }
+
   function paint() {
     [document.documentElement, document.body, document.getElementById("__next")].forEach((el) => {
-      if (!el) return;
-      el.style.setProperty("background-color", PAGE, "important");
+      if (el) el.style.setProperty("background-color", PAGE, "important");
     });
+
+    document.querySelectorAll(
+      '[data-element-id="response-block"], [data-element-id="ai-response"], [data-element-id="chat-space-middle-part"]'
+    ).forEach(flatten);
 
     const chat =
       document.querySelector('[data-element-id="chat-space-middle-part"]') ||
       document.querySelector("#__next");
     if (!chat) return;
-    chat.style.setProperty("background-color", PAGE, "important");
 
     chat.querySelectorAll("div").forEach((el) => {
       if (skip(el)) return;
-      const w = el.offsetWidth;
-      const h = el.offsetHeight;
-      if (w < 50 || h < 24) return;
+      if (el.offsetWidth < 50 || el.offsetHeight < 24) return;
 
       const c = rgb(getComputedStyle(el).backgroundColor);
-      if (!c || c.a < 0.08) return;
+      if (!c) return;
       if (isRose(c)) return;
 
       const max = Math.max(c.r, c.g, c.b);
       const min = Math.min(c.r, c.g, c.b);
       const sat = max ? (max - min) / max : 0;
 
-      const bluePurple = c.b > 110 && c.b > c.r + 15 && sat > 0.18;
-      const grayPlate =
+      const bluePurple = c.a > 0.3 && c.b > 110 && c.b > c.r + 15 && sat > 0.18;
+      const graySolid =
+        c.a > 0.35 &&
         sat < 0.22 &&
-        max > 24 &&
-        max < 130 &&
+        max > 22 &&
+        max < 140 &&
         Math.abs(c.r - c.g) < 18 &&
         Math.abs(c.g - c.b) < 18;
+      const whiteWash = sat < 0.2 && c.a > 0.02 && c.a < 0.5 && max > 80;
 
       if (bluePurple) {
         el.style.setProperty("background-color", ROSE, "important");
         el.style.setProperty("color", TEXT, "important");
-      } else if (grayPlate) {
-        el.style.setProperty("background-color", PAGE, "important");
-        el.style.setProperty("background", PAGE, "important");
-        el.style.setProperty("box-shadow", "none", "important");
+      } else if (graySolid || whiteWash) {
+        flatten(el);
       }
     });
   }
