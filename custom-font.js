@@ -1,7 +1,7 @@
 (function () {
   const css = `
     html, body, #__next, #__next *:not(code):not(pre):not(.font-mono):not(.font-mono *) {
-      font-family: "Iowan Old Style BT", "IowanOldStyleBT-Roman", "Iowan Old Style", Palatino, Georgia, serif !important;
+      font-family: Bookerly, "Bookerly Regular", "Bookerly-Regular", serif !important;
     }
     code, pre, .font-mono, .font-mono * {
       font-family: ui-monospace, Menlo, Consolas, monospace !important;
