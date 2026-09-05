@@ -5,17 +5,11 @@
   document.head.appendChild(link);
 
   const css = `
-    html { font-size: 16px !important; }
+    html { font-size: 20px !important; }
 
     html, body, #__next,
     #__next *:not(code):not(pre):not(.font-mono):not(.font-mono *) {
       font-family: "Source Serif 4", serif !important;
-    }
-
-    [data-element-id="user-message"],
-    [data-element-id="user-message"] > div {
-      background-color: #8C3F60 !important;
-      color: #F5D7E3 !important;
     }
 
     [data-element-id="send-button"],
