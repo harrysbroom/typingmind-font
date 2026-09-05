@@ -5,8 +5,6 @@
   document.head.appendChild(link);
 
   const css = `
-    html { font-size: 20px !important; }
-
     html, body, #__next,
     #__next *:not(code):not(pre):not(.font-mono):not(.font-mono *) {
       font-family: "Source Serif 4", serif !important;
