@@ -1,13 +1,8 @@
 (function () {
-  const link = document.createElement("link");
-  link.rel = "stylesheet";
-  link.href = "https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap";
-  document.head.appendChild(link);
-
   const css = `
     html, body, #__next,
     #__next *:not(code):not(pre):not(.font-mono):not(.font-mono *) {
-      font-family: "Source Serif 4", serif !important;
+      font-family: Verdana, Geneva, sans-serif !important;
     }
 
     [data-element-id="send-button"],
