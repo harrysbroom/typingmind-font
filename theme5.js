@@ -1,0 +1,67 @@
+/* ==========================================
+   TypingMind Mobile Reader / E-Book Mode 🌙📖
+   ========================================== */
+
+/* 1. Base Reader Background & Warm Dark Theme */
+body, 
+[class*="bg-gray-"], 
+[class*="bg-slate-"], 
+[class*="bg-zinc-"] {
+  background-color: #121212 !important;
+  color: #D8D8D8 !important;
+}
+
+/* 2. E-Book Typography & Paragraph Spacing */
+.prose, 
+[class*="chat-message"], 
+[class*="message-content"] {
+  font-family: 'Georgia', 'Merriweather', 'Palatino', serif !important;
+  font-size: 1.08rem !important;
+  line-height: 1.75 !important;
+  letter-spacing: 0.015em !important;
+  color: #D8D8D8 !important;
+}
+
+/* Paragraph spacing for continuous narrative */
+.prose p {
+  margin-bottom: 1.25rem !important;
+  text-align: left !important;
+}
+
+/* 3. Remove Chat Bubbles & Background Boxes */
+[class*="chat-message"],
+[class*="message-"] {
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding-left: 0.5rem !important;
+  padding-right: 0.5rem !important;
+  margin-bottom: 1.5rem !important;
+}
+
+/* 4. Minimize / De-emphasize User Prompts */
+[data-message-author-role="user"],
+[class*="user-message"] {
+  opacity: 0.45 !important;
+  font-size: 0.88rem !important;
+  font-style: italic !important;
+  border-bottom: 1px dashed #333 !important;
+  padding-bottom: 0.5rem !important;
+  margin-top: 2rem !important;
+}
+
+/* 5. Clean Mobile Interface & Hide Distractions */
+[class*="avatar"], 
+img[alt*="avatar"] {
+  display: none !important;
+}
+
+/* Subtle input bar at the bottom */
+textarea, 
+[contenteditable="true"], 
+[class*="input-"] {
+  background-color: #1E1E1E !important;
+  color: #E0E0E0 !important;
+  border-color: #2A2A2A !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+}
