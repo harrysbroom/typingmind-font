@@ -1,12 +1,4 @@
 (function () {
-  // Load PT Sans first
-  if (!document.querySelector('link[href*="PT+Sans"]')) {
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = "https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap";
-    document.head.appendChild(link);
-  }
-
   const css = `
     * { -webkit-tap-highlight-color: transparent !important; }
     html, body, #__next, #__next > div,
@@ -27,7 +19,7 @@
     [data-element-id="ai-response"] *,
     [data-element-id="response-block"],
     [data-element-id="response-block"] * {
-      font-family: "PT Sans", "PT Sans", sans-serif !important;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
     }
     code, pre, .font-mono, .font-mono * {
       font-family: ui-monospace, Menlo, Consolas, monospace !important;
