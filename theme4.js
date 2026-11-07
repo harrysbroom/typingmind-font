@@ -1,4 +1,12 @@
 (function () {
+  // Load PT Sans first
+  if (!document.querySelector('link[href*="PT+Sans"]')) {
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap";
+    document.head.appendChild(link);
+  }
+
   const css = `
     * { -webkit-tap-highlight-color: transparent !important; }
     html, body, #__next, #__next > div,
@@ -10,9 +18,19 @@
       background-color: #141115 !important;
       color: #F5D7E3 !important;
     }
-    html, body, #__next,
-    #__next *:not(code):not(pre):not(.font-mono):not(.font-mono *) {
-      font-family: "PT Sans", sans-serif !important;
+    html, body, #__next, #__next *,
+    [data-element-id="chat-space-middle-part"],
+    [data-element-id="chat-space-middle-part"] *,
+    [data-element-id="main-content-area"],
+    [data-element-id="main-content-area"] *,
+    [data-element-id="ai-response"],
+    [data-element-id="ai-response"] *,
+    [data-element-id="response-block"],
+    [data-element-id="response-block"] * {
+      font-family: "PT Sans", "PT Sans", sans-serif !important;
+    }
+    code, pre, .font-mono, .font-mono * {
+      font-family: ui-monospace, Menlo, Consolas, monospace !important;
     }
     [data-element-id="response-block"],
     [data-element-id="response-block"]:hover,
@@ -43,16 +61,7 @@
       color: #F5D7E3 !important;
       caret-color: #E4A3B9 !important;
     }
-    code, pre, .font-mono, .font-mono * {
-      font-family: ui-monospace, Menlo, Consolas, monospace !important;
-    }
   `;
-
-  // Load PT Sans
-  const link = document.createElement("link");
-  link.rel = "stylesheet";
-  link.href = "https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap";
-  document.head.appendChild(link);
 
   const old = document.getElementById("custom-font-extension");
   if (old) old.remove();
