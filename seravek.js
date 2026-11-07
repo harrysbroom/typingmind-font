@@ -1,27 +1,50 @@
 (function () {
-  const PAGE = "#141115";
-  const ROSE = "#8C3F60";
-  const TEXT = "#F5D7E3";
-
   const css = `
     * { -webkit-tap-highlight-color: transparent !important; }
-    html, body, #__next, #__next * {
+    html, body, #__next, #__next > div,
+    [data-element-id="chat-space-middle-part"],
+    [data-element-id="main-content-area"],
+    [data-element-id="ai-response"],
+    [data-element-id="response-block"] {
+      background: #141115 !important;
+      background-color: #141115 !important;
+      color: #F5D7E3 !important;
+    }
+    html, body, #__next,
+    #__next *:not(code):not(pre):not(.font-mono):not(.font-mono *) {
       font-family: Seravek, "Helvetica Neue", system-ui, sans-serif !important;
     }
-    code, pre, .font-mono, .font-mono * {
-      font-family: ui-monospace, Menlo, Consolas, monospace !important;
+    [data-element-id="response-block"],
+    [data-element-id="response-block"]:hover,
+    [data-element-id="response-block"]:active,
+    [data-element-id="response-block"]:focus,
+    [data-element-id="ai-response"],
+    [data-element-id="ai-response"] > div,
+    [data-element-id="ai-response"]:hover,
+    [data-element-id="ai-response"]:active {
+      background: #141115 !important;
+      background-color: #141115 !important;
+      box-shadow: none !important;
+      -webkit-tap-highlight-color: transparent !important;
+    }
+    [data-element-id="chat-space-middle-part"] *,
+    [data-element-id="main-content-area"] * {
+      -webkit-tap-highlight-color: transparent !important;
     }
     [data-element-id="send-button"],
     [data-element-id="more-options-button"],
     [data-element-id="regenerate-button"] {
-      background-color: ${ROSE} !important;
-      border-color: ${ROSE} !important;
-      color: ${TEXT} !important;
+      background-color: #8C3F60 !important;
+      border-color: #8C3F60 !important;
+      color: #F5D7E3 !important;
     }
     textarea, input, [contenteditable="true"],
     [data-element-id="chat-input-textbox"] {
-      color: ${TEXT} !important;
+      color: #F5D7E3 !important;
       caret-color: #E4A3B9 !important;
+    }
+    code, pre, .font-mono, .font-mono * {
+      font-family: ui-monospace, Menlo, Consolas, monospace !important;
     }
   `;
 
@@ -31,37 +54,4 @@
   style.id = "custom-font-extension";
   style.textContent = css;
   document.head.appendChild(style);
-
-  function skip(el) {
-    return !!(
-      el.closest(
-        "button, textarea, input, nav, [data-element-id='send-button'], [data-element-id='workspace-bar'], [data-element-id='chat-input-textbox-container'], [data-element-id='user-message']"
-      )
-    );
-  }
-
-  function paint() {
-    const chat =
-      document.querySelector('[data-element-id="chat-space-middle-part"]') ||
-      document.querySelector("#__next");
-    if (!chat) return;
-
-    chat.style.setProperty("background-color", PAGE, "important");
-    chat.style.setProperty("background", PAGE, "important");
-
-    // Force every reasonable div
-    chat.querySelectorAll("div").forEach((el) => {
-      if (skip(el)) return;
-      if (el.offsetWidth < 40 || el.offsetHeight < 20) return;
-      el.style.setProperty("background-color", PAGE, "important");
-      el.style.setProperty("background", PAGE, "important");
-      el.style.setProperty("box-shadow", "none", "important");
-    });
-  }
-
-  paint();
-  setInterval(paint, 100);
-  document.addEventListener("touchstart", paint, true);
-  document.addEventListener("touchend", paint, true);
-  document.addEventListener("scroll", paint, true);
 })();
