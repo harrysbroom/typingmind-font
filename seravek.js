@@ -11,31 +11,6 @@
     code, pre, .font-mono, .font-mono * {
       font-family: ui-monospace, Menlo, Consolas, monospace !important;
     }
-    html, body, #__next, #__next > div,
-    [data-element-id="chat-space-middle-part"],
-    [data-element-id="main-content-area"],
-    [data-element-id="ai-response"],
-    [data-element-id="response-block"] {
-      background: ${PAGE} !important;
-      background-color: ${PAGE} !important;
-    }
-    [data-element-id="response-block"],
-    [data-element-id="response-block"]:hover,
-    [data-element-id="response-block"]:active,
-    [data-element-id="response-block"]:focus,
-    [data-element-id="ai-response"],
-    [data-element-id="ai-response"] > div,
-    [data-element-id="ai-response"]:hover,
-    [data-element-id="ai-response"]:active {
-      background: ${PAGE} !important;
-      background-color: ${PAGE} !important;
-      box-shadow: none !important;
-      -webkit-tap-highlight-color: transparent !important;
-    }
-    [data-element-id="chat-space-middle-part"] *,
-    [data-element-id="main-content-area"] * {
-      -webkit-tap-highlight-color: transparent !important;
-    }
     [data-element-id="send-button"],
     [data-element-id="more-options-button"],
     [data-element-id="regenerate-button"] {
@@ -57,12 +32,6 @@
   style.textContent = css;
   document.head.appendChild(style);
 
-  function rgb(bg) {
-    const m = String(bg).match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([0-9.]+))?\)/);
-    if (!m) return null;
-    return { r: +m[1], g: +m[2], b: +m[3], a: m[4] == null ? 1 : +m[4] };
-  }
-
   function skip(el) {
     return !!(
       el.closest(
@@ -72,22 +41,27 @@
   }
 
   function paint() {
-    [document.documentElement, document.body, document.getElementById("__next")].forEach((el) => {
-      if (!el) return;
-      el.style.setProperty("background-color", PAGE, "important");
-    });
-
     const chat =
       document.querySelector('[data-element-id="chat-space-middle-part"]') ||
       document.querySelector("#__next");
     if (!chat) return;
-    chat.style.setProperty("background-color", PAGE, "important");
 
+    chat.style.setProperty("background-color", PAGE, "important");
+    chat.style.setProperty("background", PAGE, "important");
+
+    // Force every reasonable div
     chat.querySelectorAll("div").forEach((el) => {
       if (skip(el)) return;
-      const w = el.offsetWidth;
-      const h = el.offsetHeight;
-      if (w < 50 || h < 24) return;
+      if (el.offsetWidth < 40 || el.offsetHeight < 20) return;
+      el.style.setProperty("background-color", PAGE, "important");
+      el.style.setProperty("background", PAGE, "important");
+      el.style.setProperty("box-shadow", "none", "important");
+    });
+  }
 
-      const c = rgb(getComputedStyle(el).backgroundColor);
-      if (!c || c
+  paint();
+  setInterval(paint, 100);
+  document.addEventListener("touchstart", paint, true);
+  document.addEventListener("touchend", paint, true);
+  document.addEventListener("scroll", paint, true);
+})();
