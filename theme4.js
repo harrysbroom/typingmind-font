@@ -1,7 +1,6 @@
 (function () {
   const css = `
     * { -webkit-tap-highlight-color: transparent !important; }
-    html { font-size: 16px !important; }
     html, body, #__next, #__next > div,
     [data-element-id="chat-space-middle-part"],
     [data-element-id="main-content-area"],
@@ -13,7 +12,7 @@
     }
     html, body, #__next,
     #__next *:not(code):not(pre):not(.font-mono):not(.font-mono *) {
-      font-family: "Source Serif 4", serif !important;
+      font-family: "PT Sans", sans-serif !important;
     }
     [data-element-id="response-block"],
     [data-element-id="response-block"]:hover,
@@ -48,6 +47,12 @@
       font-family: ui-monospace, Menlo, Consolas, monospace !important;
     }
   `;
+
+  // Load PT Sans
+  const link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.href = "https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap";
+  document.head.appendChild(link);
 
   const old = document.getElementById("custom-font-extension");
   if (old) old.remove();
