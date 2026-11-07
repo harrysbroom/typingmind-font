@@ -1,6 +1,19 @@
 (function () {
   const css = `
-    * { -webkit-tap-highlight-color: transparent !important; }
+    * { 
+      -webkit-tap-highlight-color: transparent !important;
+      -webkit-touch-callout: none !important;
+    }
+
+    ::selection {
+      background: transparent !important;
+      color: inherit !important;
+    }
+    ::-moz-selection {
+      background: transparent !important;
+      color: inherit !important;
+    }
+
     html, body, #__next, #__next > div,
     [data-element-id="chat-space-middle-part"],
     [data-element-id="main-content-area"],
@@ -10,10 +23,13 @@
       background-color: #141115 !important;
       color: #F5D7E3 !important;
     }
+
     html, body, #__next,
     #__next *:not(code):not(pre):not(.font-mono):not(.font-mono *) {
       font-family: Seravek, "Helvetica Neue", system-ui, sans-serif !important;
+      -webkit-tap-highlight-color: transparent !important;
     }
+
     [data-element-id="response-block"],
     [data-element-id="response-block"]:hover,
     [data-element-id="response-block"]:active,
@@ -27,10 +43,12 @@
       box-shadow: none !important;
       -webkit-tap-highlight-color: transparent !important;
     }
+
     [data-element-id="chat-space-middle-part"] *,
     [data-element-id="main-content-area"] * {
       -webkit-tap-highlight-color: transparent !important;
     }
+
     [data-element-id="send-button"],
     [data-element-id="more-options-button"],
     [data-element-id="regenerate-button"] {
@@ -38,11 +56,13 @@
       border-color: #8C3F60 !important;
       color: #F5D7E3 !important;
     }
+
     textarea, input, [contenteditable="true"],
     [data-element-id="chat-input-textbox"] {
       color: #F5D7E3 !important;
       caret-color: #E4A3B9 !important;
     }
+
     code, pre, .font-mono, .font-mono * {
       font-family: ui-monospace, Menlo, Consolas, monospace !important;
     }
