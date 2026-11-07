@@ -1,7 +1,4 @@
 (function () {
-  const PAGE = "#141115";
-  const TEXT = "#F5D7E3";
-
   const css = `
     * { 
       -webkit-tap-highlight-color: transparent !important;
@@ -9,21 +6,46 @@
     }
 
     ::selection {
-      background: ${PAGE} !important;
-      color: ${TEXT} !important;
+      background: #141115 !important;
+      color: #F5D7E3 !important;
     }
     ::-moz-selection {
-      background: ${PAGE} !important;
-      color: ${TEXT} !important;
+      background: #141115 !important;
+      color: #F5D7E3 !important;
     }
 
-    html, body, #__next, #__next * {
+    html, body, #__next, #__next > div,
+    [data-element-id="chat-space-middle-part"],
+    [data-element-id="main-content-area"],
+    [data-element-id="ai-response"],
+    [data-element-id="response-block"] {
+      background: #141115 !important;
+      background-color: #141115 !important;
+      color: #F5D7E3 !important;
+    }
+
+    html, body, #__next,
+    #__next *:not(code):not(pre):not(.font-mono):not(.font-mono *) {
       font-family: Seravek, "Helvetica Neue", system-ui, sans-serif !important;
+    }
+
+    [data-element-id="response-block"],
+    [data-element-id="response-block"]:hover,
+    [data-element-id="response-block"]:active,
+    [data-element-id="response-block"]:focus,
+    [data-element-id="ai-response"],
+    [data-element-id="ai-response"] > div,
+    [data-element-id="ai-response"]:hover,
+    [data-element-id="ai-response"]:active {
+      background: #141115 !important;
+      background-color: #141115 !important;
+      box-shadow: none !important;
       -webkit-tap-highlight-color: transparent !important;
     }
 
-    code, pre, .font-mono, .font-mono * {
-      font-family: ui-monospace, Menlo, Consolas, monospace !important;
+    [data-element-id="chat-space-middle-part"] *,
+    [data-element-id="main-content-area"] * {
+      -webkit-tap-highlight-color: transparent !important;
     }
 
     [data-element-id="send-button"],
@@ -31,13 +53,17 @@
     [data-element-id="regenerate-button"] {
       background-color: #8C3F60 !important;
       border-color: #8C3F60 !important;
-      color: ${TEXT} !important;
+      color: #F5D7E3 !important;
     }
 
     textarea, input, [contenteditable="true"],
     [data-element-id="chat-input-textbox"] {
-      color: ${TEXT} !important;
+      color: #F5D7E3 !important;
       caret-color: #E4A3B9 !important;
+    }
+
+    code, pre, .font-mono, .font-mono * {
+      font-family: ui-monospace, Menlo, Consolas, monospace !important;
     }
   `;
 
@@ -47,13 +73,4 @@
   style.id = "custom-font-extension";
   style.textContent = css;
   document.head.appendChild(style);
-
-  // Extra force on touch/selection
-  function killHighlight() {
-    document.documentElement.style.setProperty("-webkit-tap-highlight-color", "transparent", "important");
-    document.body.style.setProperty("-webkit-tap-highlight-color", "transparent", "important");
-  }
-  killHighlight();
-  document.addEventListener("touchstart", killHighlight, true);
-  document.addEventListener("selectionchange", killHighlight);
 })();
