@@ -8,6 +8,20 @@
   }
 
   const css = `
+    * { 
+      -webkit-tap-highlight-color: transparent !important;
+      -webkit-touch-callout: none !important;
+    }
+
+    ::selection {
+      background: #141115 !important;
+      color: #F5D7E3 !important;
+    }
+    ::-moz-selection {
+      background: #141115 !important;
+      color: #F5D7E3 !important;
+    }
+
     html, body, #__next,
     #__next *:not(code):not(pre):not(.font-mono):not(.font-mono *) {
       font-family: "PT Sans", "PT Sans", sans-serif !important;
